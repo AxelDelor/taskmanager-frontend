@@ -1,3 +1,4 @@
+import TaskForm from "@/components/task-form";
 import { getTasks } from "@/lib/api";
 
 export default async function Home() {
@@ -17,6 +18,7 @@ export default async function Home() {
       ) : (
         <p>No tasks have been created for now</p>
       )}
+      <TaskForm />
     </main>
   );
 }
