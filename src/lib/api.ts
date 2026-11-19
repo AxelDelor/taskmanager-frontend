@@ -1,5 +1,13 @@
 import { Task } from "@/types/task";
 
+export class ApiError extends Error {
+  status: number;
+  constructor(status: number, detail: string) {
+    super(detail);
+    this.status = status;
+  }
+}
+
 export async function getTasks(): Promise<Task[]> {
   const url = getApiUrl();
 
@@ -34,6 +42,10 @@ export async function createTask(title: string, description: string | null): Pro
   }
 
   if (!response.ok) {
+    if (response.status === 400) {
+      throw new ApiError(400, "The task could not be created, please, check the fields")
+    }
+
     throw new Error(`API error: ${response.status}`);
   }
 
@@ -50,3 +62,5 @@ function getApiUrl() {
   }
   return url;
 }
+
+
