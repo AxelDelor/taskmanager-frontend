@@ -1,7 +1,9 @@
+export type TaskStatus = "TODO" | "IN PROGRESS" | "DONE";
+
 export type Task = {
   id: number;
   title: string;
   description: string | null;
-  status: "TODO" | "IN_PROGRESS" | "DONE";
+  status: TaskStatus;
   creationDate: string;
 };
