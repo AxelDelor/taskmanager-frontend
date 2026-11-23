@@ -43,7 +43,7 @@ export default function TaskForm() {
         <button disabled={isPending} type="submit" className="btn btn-neutral">
           Create task
         </button>
-        {state.error !== null ? <p>{state.error}</p> : null}
+        {state.error && <p role="alert">{state.error}</p>}
         {state.success ? <p>The task has been successfully created</p> : null}
       </form>
     </div>
