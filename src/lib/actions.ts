@@ -1,8 +1,10 @@
 "use server";
 
 import { TaskCreationState } from "@/types/task-creation-state";
-import { ApiError, createTask } from "./api";
+import { ApiError, createTask, updateStatus } from "./api";
 import { revalidatePath } from "next/cache";
+import { TaskStatus } from "@/types/task";
+import { UpdateStatusState } from "@/types/update-status-state";
 
 export async function createTaskAction(
   prevState: TaskCreationState,
@@ -21,8 +23,8 @@ export async function createTaskAction(
     };
   }
 
-  const titleClean = title.trim()
-  const descriptionClean = description.trim() ? description.trim() : null 
+  const titleClean = title.trim();
+  const descriptionClean = description.trim() ? description.trim() : null;
 
   try {
     await createTask(titleClean, descriptionClean);
@@ -39,6 +41,23 @@ export async function createTaskAction(
     success: true,
     values: { title: "", description: "" },
   };
+}
+
+export async function updateStatusAction(
+  taskId: number,
+  status: TaskStatus,
+): Promise<UpdateStatusState> {
+  try {
+    await updateStatus(taskId, status);
+  } catch (error) {
+    if (error instanceof ApiError && error.status === 404) {
+      return { error: error.message, success: false };
+    }
+    throw error;
+  }
+
+  revalidatePath("/");
+  return { error: null, success: true };
 }
 
 // private

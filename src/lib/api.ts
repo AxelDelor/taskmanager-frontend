@@ -87,5 +87,3 @@ function getApiUrl() {
   }
   return url;
 }
-
-function
