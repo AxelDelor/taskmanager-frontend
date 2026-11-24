@@ -1,3 +1,4 @@
+import NextStatusButton from "@/components/next-status-button";
 import TaskForm from "@/components/task-form";
 import { getTasks } from "@/lib/api";
 
@@ -9,10 +10,13 @@ export default async function Home() {
       {tasks.length > 0 ? (
         <ul>
           {tasks.map((task) => (
-            <li key={task.id}>
-              {task.title} - {task.description ? task.description : "No description"} :{" "}
-              {task.status.toLowerCase()} ({new Date(task.creationDate).toLocaleDateString("UTC")})
-            </li>
+            <div key={task.id} className="flex flex-row align-middle items-center p-3">
+              <li>
+                {task.title} - {task.description ? task.description : "No description"} : (
+                {new Date(task.creationDate).toLocaleDateString("UTC")})
+              </li>
+              <NextStatusButton id={task.id} status={task.status} />
+            </div>
           ))}
         </ul>
       ) : (
