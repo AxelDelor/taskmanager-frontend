@@ -11,3 +11,9 @@ export const buttonColour: Record<TaskStatus, string> = {
   IN_PROGRESS: "btn-warning",
   DONE: "btn-success",
 };
+
+export const buttonLabel: Record<TaskStatus, string> = {
+  TODO: "To do",
+  IN_PROGRESS: "In progress",
+  DONE: "Done",
+};
